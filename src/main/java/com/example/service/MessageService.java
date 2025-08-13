@@ -58,4 +58,19 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public List<Message> getAllMessagesByAccountId(Integer accountId){
+        return messageRepository.findByPostedBy(accountId);
+    }
+
+    public Integer updateMessageById(Integer messageId, Message message){
+        Message tempMessage = getMessageById(messageId);
+        if (tempMessage == null){
+            throw new IllegalArgumentException("Message does not exist");
+        }
+        tempMessage.setMessageText(message.getMessageText());
+        createMessage(tempMessage);
+        
+        return Integer.valueOf(1);
+    }
+
 }
